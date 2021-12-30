@@ -41,4 +41,10 @@ class CartController extends GetxController {
         padding: EdgeInsets.all(20),
         barBlur: 20);
   }
+
+  get total => _products.entries
+      .map((product) => (product.key.price * product.value))
+      .toList()
+      .reduce((value, element) => value + element)
+      .toStringAsFixed(2);
 }

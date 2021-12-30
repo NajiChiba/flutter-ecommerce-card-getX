@@ -17,14 +17,28 @@ class CartScreen extends StatelessWidget {
         () => Container(
           height: size.height,
           width: size.width,
-          child: ListView.builder(
-              itemCount: cartController.products.length,
-              itemBuilder: (BuildContext context, index) => AddedProductCard(
-                    index,
-                    cartController,
-                    cartController.products.keys.toList()[index],
-                    cartController.products.values.toList()[index],
-                  )),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 5,
+                child: ListView.builder(
+                    itemCount: cartController.products.length,
+                    itemBuilder: (BuildContext context, index) =>
+                        AddedProductCard(
+                          index,
+                          cartController,
+                          cartController.products.keys.toList()[index],
+                          cartController.products.values.toList()[index],
+                        )),
+              ),
+              Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 70),
+                    child: Totale(),
+                  ))
+            ],
+          ),
         ),
       ),
     );
@@ -81,6 +95,30 @@ class AddedProductCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class Totale extends StatelessWidget {
+  final CartController cartController = Get.find();
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      // ignore: prefer_const_literals_to_create_immutables
+      children: [
+        Text(
+          "Total",
+          style: TextStyle(
+              color: Colors.black87, fontSize: 28, fontWeight: FontWeight.w800),
+        ),
+        Text("\$${cartController.total}",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.w800,
+            ))
+      ],
     );
   }
 }
